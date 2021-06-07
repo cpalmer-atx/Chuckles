@@ -22,13 +22,18 @@ function App() {
     setTimeout(() => {getJokeFromAPI(init)}, 1000);
   }
 
+  const thumbsPlaceholder = () => {
+    getJokeFromAPI("Thumbs up/down clicked!");
+    setTimeout(() => {getJokeFromAPI(init)}, 1000);
+  }
+
   return (
     <div className="container">
       <Header />
       <View jokeFromAPI={jokeFromAPI} 
             fetchFromAPI={fetchFromAPI}
       />
-      <Approval />
+      <Approval thumbsPlaceholder={thumbsPlaceholder} />
       <SavedView />
       <DBController />
     </div>
