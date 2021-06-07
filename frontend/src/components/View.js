@@ -1,7 +1,12 @@
 export const View = () => {
   return (
-    <div>
-      <h3>Reserved for View Component</h3>
-    </div>
+    <>
+      <button className="btn">
+        Get new joke
+      </button>
+      <div className="view-panel">
+        <p>Joke pulled from chuck norris API</p>
+      </div>
+    </>
   )
 }
