@@ -1,11 +1,12 @@
-export const View = () => {
+export const View = ({ jokeFromAPI, fetchFromAPI }) => {
   return (
     <>
-      <button className="btn">
-        Get new joke
+      <button className="btn"
+              onClick={fetchFromAPI}
+              >Get new joke
       </button>
       <div className="view-panel">
-        <p>Joke pulled from chuck norris API</p>
+        <p>{jokeFromAPI}</p>
       </div>
     </>
   )
