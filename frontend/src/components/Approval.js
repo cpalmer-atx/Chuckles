@@ -1,7 +1,18 @@
+import { GoThumbsup, GoThumbsdown } from 'react-icons/go';
+
 export const Approval = () => {
   return (
-    <div>
-      <h3>Reserved for Approval component</h3>
+    <div className="approval-container">
+      <div>
+        <button className="like-btn">
+          <GoThumbsup />
+        </button>
+      </div>
+      <div>
+        <button className="dislike-btn">
+          <GoThumbsdown />
+        </button>
+      </div>
     </div>
   )
 }
