@@ -12,22 +12,30 @@ import './App.css';
 function App() {
 
   // Placeholders for state
-  const init_API = "API jokes will display here";
   const init_DB = "DB jokes will display here";
+  let curr = {
+    data: { value: 'Click button for first joke' }
+  }
 
   // State variables
-  const [ jokeFromAPI, getJokeFromAPI ] = useState('Click button for first joke');
+  const [ jokeFromAPI, getJokeFromAPI ] = useState(curr.data.value);
   const [ jokeFromDB, getJokeFromDB ] = useState(init_DB);
 
   // State functions
   const fetchFromAPI = async () => {
     try {
       const res = await axios.get('https://api.chucknorris.io/jokes/random?category=dev');
-      getJokeFromAPI(res.data.value);
+      curr = res.data;
+      getJokeFromAPI(curr.value);
     } catch (error) {
-      getJokeFromAPI("Error fetching from API, see console for details.")
+      getJokeFromAPI("Error fetching from API, see console for details.");
       console.log(error);
     }
+  }
+
+  const thumbsPlaceholder = () => {
+    getJokeFromAPI("Thumbs up/down clicked!");
+    setTimeout(() => {getJokeFromAPI(jokeFromAPI)}, 1000);
   }
 
   const fetchFromDB = () => {
@@ -45,10 +53,6 @@ function App() {
     setTimeout(() => {getJokeFromDB(init_DB)}, 1000);
   }
 
-  const thumbsPlaceholder = () => {
-    getJokeFromAPI("Thumbs up/down clicked!");
-    setTimeout(() => {getJokeFromAPI(init_API)}, 1000);
-  }
 
   return (
     <div className="container">
