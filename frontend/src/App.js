@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 import { Approval } from './components/Approval';
 import { DBController } from './components/DBController';
@@ -15,13 +16,18 @@ function App() {
   const init_DB = "DB jokes will display here";
 
   // State variables
-  const [ jokeFromAPI, getJokeFromAPI ] = useState(init_API);
+  const [ jokeFromAPI, getJokeFromAPI ] = useState('Click button for first joke');
   const [ jokeFromDB, getJokeFromDB ] = useState(init_DB);
 
   // State functions
-  const fetchFromAPI = () => {
-    getJokeFromAPI("Get new joke clicked!");
-    setTimeout(() => {getJokeFromAPI(init_API)}, 1000);
+  const fetchFromAPI = async () => {
+    try {
+      const res = await axios.get('https://api.chucknorris.io/jokes/random?category=dev');
+      getJokeFromAPI(res.data.value);
+    } catch (error) {
+      getJokeFromAPI("Error fetching from API, see console for details.")
+      console.log(error);
+    }
   }
 
   const fetchFromDB = () => {
