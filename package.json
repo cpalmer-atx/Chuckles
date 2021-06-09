@@ -1,0 +1,30 @@
+{
+  "name": "chuckles",
+  "version": "1.0.0",
+  "description": "A ridiculous Chuck Norris joke generator powered by the MERN stack.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpalmer-atx/chuckles.git"
+  },
+  "author": "Chad Palmer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cpalmer-atx/chuckles/issues"
+  },
+  "homepage": "https://github.com/cpalmer-atx/chuckles#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
