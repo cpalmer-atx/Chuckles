@@ -1,17 +1,17 @@
 import { GoThumbsup, GoThumbsdown } from 'react-icons/go';
 
-export const Approval = ({ thumbsPlaceholder }) => {
+export const Approval = ({ thumbsUp, thumbsDown }) => {
   return (
     <div className="approval-container">
       <div>
         <button className="like-btn"
-                onClick={thumbsPlaceholder} >
+                onClick={thumbsUp} >
           <GoThumbsup />
         </button>
       </div>
       <div>
         <button className="dislike-btn"
-                onClick={thumbsPlaceholder} >
+                onClick={thumbsDown} >
           <GoThumbsdown />
         </button>
       </div>

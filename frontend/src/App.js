@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 import { Approval } from './components/Approval';
 import { DBController } from './components/DBController';
@@ -10,18 +11,36 @@ import './App.css';
 
 function App() {
 
-  // Placeholders for state
-  const init_API = "API jokes will display here";
+  // Placeholders for state (delete when finished)
   const init_DB = "DB jokes will display here";
 
   // State variables
-  const [ jokeFromAPI, getJokeFromAPI ] = useState(init_API);
+  const [ res, setRes ] = useState({id: 'init', value: 'init'});
+  const [ jokeFromAPI, getJokeFromAPI ] = useState('Click button for first joke');
   const [ jokeFromDB, getJokeFromDB ] = useState(init_DB);
 
   // State functions
-  const fetchFromAPI = () => {
-    getJokeFromAPI("Get new joke clicked!");
-    setTimeout(() => {getJokeFromAPI(init_API)}, 1000);
+  const fetchFromAPI = async () => {
+    try {
+      const response = await axios.get('https://api.chucknorris.io/jokes/random?category=dev');
+      getJokeFromAPI(response.data.value);
+      setRes(response.data);
+    } catch (error) {
+      getJokeFromAPI("Error fetching from API, see console for details.");
+      console.log(error);
+    }
+  }
+
+  const thumbsUp = () => {
+    const temp = jokeFromAPI;
+    getJokeFromAPI(`data to persist to DB: id: ${res.id}, text: ${res.value}`);
+    setTimeout(() => {getJokeFromAPI(temp)}, 5000);
+  }
+
+  const thumbsDown = () => {
+    const temp = jokeFromAPI;
+    getJokeFromAPI(`Joke ID to reject from future API calls: ${res.id}`);
+    setTimeout(() => {getJokeFromAPI(temp)}, 5000);
   }
 
   const fetchFromDB = () => {
@@ -39,10 +58,6 @@ function App() {
     setTimeout(() => {getJokeFromDB(init_DB)}, 1000);
   }
 
-  const thumbsPlaceholder = () => {
-    getJokeFromAPI("Thumbs up/down clicked!");
-    setTimeout(() => {getJokeFromAPI(init_API)}, 1000);
-  }
 
   return (
     <div className="container">
@@ -50,7 +65,9 @@ function App() {
       <View jokeFromAPI={jokeFromAPI} 
             fetchFromAPI={fetchFromAPI}
       />
-      <Approval thumbsPlaceholder={thumbsPlaceholder} />
+      <Approval thumbsUp={thumbsUp}
+                thumbsDown={thumbsDown}
+      />
       <SavedView jokeFromDB={jokeFromDB} />
       <DBController fetchFromDB={fetchFromDB}
                     updateFromDB={updateFromDB}
