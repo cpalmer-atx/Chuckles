@@ -31,10 +31,16 @@ function App() {
     }
   }
 
-  const thumbsUp = () => {
-    const temp = jokeFromAPI;
-    getJokeFromAPI(`data to persist to DB: id: ${res.id}, text: ${res.value}`);
-    setTimeout(() => {getJokeFromAPI(temp)}, 5000);
+  const thumbsUp = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/chuck', {
+        _id: res.id,
+        text: res.value
+      });
+      console.log(`${response} successfully added to database!`);
+    } catch (error) {
+      console.log('Error saving joke to database.');
+    }
   }
 
   const thumbsDown = () => {
@@ -43,9 +49,14 @@ function App() {
     setTimeout(() => {getJokeFromAPI(temp)}, 5000);
   }
 
-  const fetchFromDB = () => {
-    getJokeFromDB("'GET' clicked!");
-    setTimeout(() => {getJokeFromDB(init_DB)}, 1000);
+  const fetchFromDB = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/chuck');
+      getJokeFromDB(response.data.data[0].text);
+      setRes(response.data.data[0]);
+    } catch (error) {
+      console.log('whoops')
+    }
   }
 
   const updateFromDB = () => {
@@ -53,9 +64,15 @@ function App() {
     setTimeout(() => {getJokeFromDB(init_DB)}, 1000);
   }
 
-  const deleteFromDB = () => {
-    getJokeFromDB("'DELETE' clicked!");
-    setTimeout(() => {getJokeFromDB(init_DB)}, 1000);
+  const deleteFromDB = async () => {
+    try {
+      const removed = res._id;
+      await axios.delete(`http://localhost:5000/api/chuck/${removed}`);
+      console.log(`${removed} removed from database.`);
+      fetchFromDB();
+    } catch (error) {
+      console.log('whoops')
+    }
   }
 
 
